@@ -1,0 +1,277 @@
+.wallet-connect {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: -apple-system, system-ui, sans-serif;
+  background: linear-gradient(to bottom right, #f5f3ff, #ede9fe);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  min-height: 100vh;
+}
+
+.network-selector {
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.network-selector button {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: #f7fafc;
+  color: #4a5568;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.network-selector button.active {
+  background-color: #6b46c1;
+  color: #ffffff;
+  border-color: #6b46c1;
+}
+
+.network-selector button:hover:not(.active) {
+  background-color: #e2e8f0;
+  border-color: #cbd5e0;
+}
+
+.connect-button {
+  width: 100%;
+  padding: 1rem;
+  background-color: #6b46c1;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.connect-button:hover {
+  background-color: #553c9a;
+}
+
+.account-info {
+  padding: 1rem;
+  background-color: #f7fafc;
+  border-radius: 6px;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.switch-account {
+  padding: 0.5rem 1rem;
+  background-color: #e2e8f0;
+  color: #4a5568;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.switch-account:hover {
+  background-color: #cbd5e0;
+  color: #2d3748;
+}
+
+.account-select {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.account-button {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  text-align: left;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.account-button.active {
+  background-color: #f0f0f0;
+  border-color: #6b46c1;
+}
+
+.account-button:hover:not(.active) {
+  background-color: #f7fafc;
+  border-color: #cbd5e0;
+}
+
+.transaction-section {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.donate-button {
+  background-color: #38a169;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.donate-button:hover {
+  background-color: #2f855a;
+}
+
+.donate-button:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.assets-section {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.assets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.asset-card {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.asset-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.asset-card.selected {
+  border-color: #6b46c1;
+  box-shadow: 0 4px 6px -1px rgba(107, 70, 193, 0.2), 0 2px 4px -1px rgba(107, 70, 193, 0.1);
+}
+
+.asset-logo-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #6b46c1;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  font-weight: bold;
+}
+
+.asset-info {
+  flex: 1;
+}
+
+.asset-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #2d3748;
+}
+
+.asset-info p {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+.asset-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.opt-in-button,
+.select-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.opt-in-button {
+  background-color: #38a169;
+  color: #ffffff;
+}
+
+.opt-in-button.pending {
+  background-color: #a0aec0;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+.opt-in-button.success {
+  background-color: #38a169;
+  color: #ffffff;
+}
+
+.opt-in-button.failed {
+  background-color: #c53030;
+  color: #ffffff;
+}
+
+.select-button {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.select-button.selected {
+  background-color: #6b46c1;
+  color: #ffffff;
+}
+
+.select-button:hover:not(.selected) {
+  background-color: #cbd5e0;
+  color: #2d3748;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #4a5568;
+}
+
+.error {
+  color: #c53030;
+  padding: 1rem;
+  text-align: center;
+  background-color: #fed7d7;
+  border-radius: 6px;
+}
+
+/* AtomicSwap positioning */
+.atomic-swap-container {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 50;
+  max-width: 400px;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
