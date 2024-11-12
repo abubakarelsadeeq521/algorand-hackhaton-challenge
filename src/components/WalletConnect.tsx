@@ -61,22 +61,39 @@ const useWalletConnection = () => {
   const [accountAddress, setAccountAddress] = useState<string>('');
   const [accounts, setAccounts] = useState<string[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [connectionError, setConnectionError] = useState<string>('');
+  const [shouldShowAccountSelect, setShouldShowAccountSelect] = useState(false);
 
   const connectWallet = useCallback(async () => {
     try {
       setIsConnecting(true);
+      setConnectionError('');
+      
       const walletAccounts = await peraWallet.connect();
       setAccounts(walletAccounts);
+      
       if (walletAccounts.length === 1) {
         setAccountAddress(walletAccounts[0]);
+      } else if (walletAccounts.length > 1) {
+        setShouldShowAccountSelect(true);
       }
+      
       return walletAccounts;
-    } catch (error) {
-      console.error("Connection failed:", error);
-      throw error;
+    } catch (error: any) {
+      if (error.message === 'Connect modal is closed by user') {
+        setConnectionError('Connection cancelled');
+      } else {
+        setConnectionError('Failed to connect wallet');
+        console.error("Connection failed:", error);
+      }
     } finally {
       setIsConnecting(false);
     }
+  }, []);
+
+  const selectAccount = useCallback((address: string) => {
+    setAccountAddress(address);
+    setShouldShowAccountSelect(false);
   }, []);
 
   const disconnectWallet = useCallback(() => {
@@ -103,9 +120,13 @@ const useWalletConnection = () => {
     accountAddress,
     accounts,
     isConnecting,
+    connectionError,
+    shouldShowAccountSelect,
     connectWallet,
+    selectAccount,
     disconnectWallet,
-    setAccountAddress
+    setAccountAddress,
+    setShouldShowAccountSelect
   };
 };
 
@@ -207,15 +228,71 @@ const NetworkSelector: React.FC<{
   </div>
 ));
 
+const AccountSelector: React.FC<{
+  accounts: string[];
+  selectedAccount: string;
+  onSelect: (address: string) => void;
+  onClose: () => void;
+}> = ({ accounts, selectedAccount, onSelect, onClose }) => (
+  <div className="fixed inset-0 z-50">
+    {/* Backdrop */}
+    <div 
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+      onClick={onClose}
+    />
+    
+    {/* Modal */}
+    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px]">
+      <div className="bg-white rounded-2xl p-6 shadow-2xl border border-gray-100">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-xl font-bold text-gray-900">Select Account</h3>
+          <button 
+            onClick={onClose}
+            className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            ×
+          </button>
+        </div>
+        
+        <div className="space-y-3">
+          {accounts.map(account => (
+            <button
+              key={account}
+              onClick={() => {
+                onSelect(account);
+                onClose();
+              }}
+              className={`w-full p-4 text-left rounded-xl transition-all
+                ${account === selectedAccount 
+                  ? 'bg-purple-100 text-purple-700 border-2 border-purple-500 shadow-purple-100' 
+                  : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent'}`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-medium">{formatAddress(account)}</span>
+                {account === selectedAccount && (
+                  <span className="text-purple-600">✓</span>
+                )}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 // Main component
 const WalletConnect: React.FC = () => {
   const {
     accountAddress,
     accounts,
     isConnecting,
+    connectionError,
+    shouldShowAccountSelect,
     connectWallet,
+    selectAccount,
     disconnectWallet,
-    setAccountAddress
+    setShouldShowAccountSelect
   } = useWalletConnection();
 
   const [network, setNetwork] = useState<Network>(NETWORKS.TESTNET);
@@ -348,44 +425,58 @@ const WalletConnect: React.FC = () => {
         />
 
         {!accountAddress ? (
-          <button 
-            onClick={connectWallet} 
-            className="connect-button"
-            disabled={isConnecting}
-          >
-            {isConnecting ? 'Connecting...' : 'Connect with Pera Wallet'}
-          </button>
-        ) : (
-          <div className="account-info">
-            <p>Connected: {formatAddress(accountAddress)}</p>
-            {accounts.length > 1 && (
-              <button 
-                onClick={() => setShowAccountSelect(true)}
-                className="switch-account"
-              >
-                Switch Account
-              </button>
+          <div className="text-center py-12">
+            <button 
+              onClick={connectWallet} 
+              className="connect-button"
+              disabled={isConnecting}
+            >
+              {isConnecting ? 'Connecting...' : 'Connect with Pera Wallet'}
+            </button>
+            {connectionError && (
+              <div className="mt-4 text-sm text-red-600">
+                {connectionError}
+              </div>
             )}
-            <button onClick={disconnectWallet}>Disconnect</button>
+          </div>
+        ) : (
+          <div className="account-info bg-white rounded-xl p-4 shadow-md border border-gray-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-500">Connected Account</p>
+                <p className="text-lg font-medium">{formatAddress(accountAddress)}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                {accounts.length > 1 && (
+                  <button 
+                    onClick={() => setShowAccountSelect(true)}
+                    className="px-4 py-2 text-sm font-medium text-purple-600 
+                      hover:text-purple-700 bg-purple-50 hover:bg-purple-100 
+                      rounded-lg transition-colors"
+                  >
+                    Switch Account
+                  </button>
+                )}
+                <button 
+                  onClick={disconnectWallet}
+                  className="px-4 py-2 text-sm font-medium text-red-600 
+                    hover:text-red-700 bg-red-50 hover:bg-red-100 
+                    rounded-lg transition-colors"
+                >
+                  Disconnect
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
-        {showAccountSelect && (
-          <div className="account-select">
-            <h3>Select Account</h3>
-            {accounts.map((account) => (
-              <button 
-                key={account}
-                onClick={() => {
-                  setAccountAddress(account);
-                  setShowAccountSelect(false);
-                }}
-                className={`account-button ${account === accountAddress ? 'active' : ''}`}
-              >
-                {formatAddress(account)}
-              </button>
-            ))}
-          </div>
+        {shouldShowAccountSelect && (
+          <AccountSelector
+            accounts={accounts}
+            selectedAccount={accountAddress}
+            onSelect={selectAccount}
+            onClose={() => setShouldShowAccountSelect(false)}
+          />
         )}
 
         {accountAddress && (
