@@ -1,46 +1,96 @@
-# Getting Started with Create React App
+# Algorand Pera Wallet Integration
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web application demonstrating seamless integration with Pera Wallet for the Algorand blockchain, featuring atomic swaps, verified assets management, and multi-account support.
 
-## Available Scripts
+## 🏆 Project Achievements
 
-In the project directory, you can run:
+✅ **Core Features**
+- Full Pera Wallet integration with multi-account support
+- Network switching between Mainnet and Testnet
+- Real-time transaction status updates
+- Verified assets display with logos and details
+- Asset opt-in functionality
+- Atomic swap implementation
+- Responsive and intuitive UI
 
-### `npm start`
+✅ **Enhanced Features**
+- Transaction analytics and history
+- Asset verification status indicators
+- Improved error handling and user feedback
+- Loading states and animations
+- Clean and modern UI design
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🚀 Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- Pera Wallet mobile app
 
-### `npm test`
+### Installation
+```bash
+# Clone the repository
+git clone [repository-url]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Install dependencies
+npm install
 
-### `npm run build`
+# Start development server
+npm run dev
+🎮 Navigation Guide
+1. Wallet Connection
+Click "Connect with Pera Wallet" button
+Scan QR code with Pera mobile app
+Select account if multiple accounts available
+2. Network Selection
+Toggle between Mainnet/Testnet using network selector
+Network status displayed in header
+3. Asset Management
+View verified assets with logos and details
+Click "Opt In" to opt into an asset
+Select assets for atomic swaps
+Monitor transaction status in real-time
+4. Atomic Swap
+Select asset for swap
+Enter swap details
+Confirm transaction in Pera Wallet
+Monitor swap status
+🔍 Implementation Details
+API Integration
+Pera Connect for wallet connection
+Algorand SDK for transactions
+Pera Public API for verified assets
+Technical Stack
+React with TypeScript
+TailwindCSS for styling
+Algorand JavaScript SDK
+Pera Connect library
+Security Features
+Secure transaction signing
+Network validation
+Error boundary implementation
+Input validation
+🧪 Testing
+# Run tests
+npm test
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Run e2e tests
+npm run test:e2e
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+📚 Additional Resources
+Pera Wallet Documentation
+Algorand Developer Docs
+API Reference
+🤝 Contributing
+Feel free to submit issues and enhancement requests.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+📝 License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+🏗 Architecture
+src/
+├── components/         # React components
+├── hooks/             # Custom hooks
+├── utils/             # Utility functions
+├── types/             # TypeScript types
+└── services/          # API services
